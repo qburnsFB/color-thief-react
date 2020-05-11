@@ -37,21 +37,25 @@ export default function usePalette(
   colorCount = 2,
   format = 'rgbString',
   options = {},
+  existingData = {}
 ) {
+  const initState = existingData?.vibrant ? { ...initialState, data: existingData} : initialState;
   const { crossOrigin = null, quality = 10 } = options;
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initState);
 
   useEffect(() => {
-    dispatch({ type: 'getPalette' });
+    if (!state.data.length || !state.data?.vibrant) {
+      dispatch({type: 'getPalette'});
 
-    getPalette(imgSrc, colorCount, format, crossOrigin, quality)
-      .then((palette) => {
-        dispatch({ type: 'resolvePalette', payload: palette });
-      })
-      .catch((ex) => {
-        dispatch({ type: 'rejectPalette', payload: ex });
-      });
+      getPalette(imgSrc, colorCount, format, crossOrigin, quality)
+          .then((palette) => {
+            dispatch({type: 'resolvePalette', payload: palette});
+          })
+          .catch((ex) => {
+            dispatch({type: 'rejectPalette', payload: ex});
+          });
+    }
   }, [imgSrc]);
 
   return state;
