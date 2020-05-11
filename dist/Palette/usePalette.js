@@ -80,6 +80,11 @@ function usePalette(imgSrc, colorCount = 2, format = 'rgbString', options = {}) 
           payload: ex
         });
       });
+    } else {
+      dispatch({
+        type: 'resolvePalette',
+        payload: existingData
+      });
     }
   }, [imgSrc]);
   return state;

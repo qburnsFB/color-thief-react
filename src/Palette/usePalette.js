@@ -54,6 +54,8 @@ export default function usePalette(
           .catch((ex) => {
             dispatch({type: 'rejectPalette', payload: ex});
           });
+    } else {
+      dispatch({type: 'resolvePalette', payload: existingData });
     }
   }, [imgSrc]);
 
