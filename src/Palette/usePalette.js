@@ -37,10 +37,9 @@ export default function usePalette(
   colorCount = 2,
   format = 'rgbString',
   options = {},
-  existingData = {}
 ) {
+  const { crossOrigin = null, quality = 10, existingData } = options;
   const initState = existingData?.vibrant ? { ...initialState, data: existingData} : initialState;
-  const { crossOrigin = null, quality = 10 } = options;
 
   const [state, dispatch] = useReducer(reducer, initState);
 
