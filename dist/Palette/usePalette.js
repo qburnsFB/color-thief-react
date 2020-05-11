@@ -52,14 +52,15 @@ function reducer(state, action) {
  */
 
 
-function usePalette(imgSrc, colorCount = 2, format = 'rgbString', options = {}, existingData = {}) {
+function usePalette(imgSrc, colorCount = 2, format = 'rgbString', options = {}) {
+  const {
+    crossOrigin = null,
+    quality = 10,
+    existingData
+  } = options;
   const initState = (existingData === null || existingData === void 0 ? void 0 : existingData.vibrant) ? { ...initialState,
     data: existingData
   } : initialState;
-  const {
-    crossOrigin = null,
-    quality = 10
-  } = options;
   const [state, dispatch] = (0, _react.useReducer)(reducer, initState);
   (0, _react.useEffect)(() => {
     var _state$data;
